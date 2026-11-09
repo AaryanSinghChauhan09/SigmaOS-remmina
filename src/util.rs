@@ -1,4 +1,4 @@
-//! remmina model — remote desktop client.
+//! Utility model for remmina (legacy compat).
 
 #[derive(Debug, Clone)]
 pub struct Connection {
@@ -21,30 +21,23 @@ impl Default for Model {
 impl Model {
     pub fn new() -> Self { Self::default() }
 
-    pub fn add_connection(&mut self, conn: Connection) { self.connections.push(conn); }
-
-    pub fn connect(&mut self, name: &str) -> bool {
-        if let Some(c) = self.connections.iter_mut().find(|c| c.name == name) {
-            c.port = c.port.max(1);
-            true
-        } else { false }
+    pub fn add_connection(&mut self, name: &str, protocol: &str, host: &str, port: u16, username: &str) {
+        self.connections.push(Connection {
+            name: name.into(), protocol: protocol.into(),
+            host: host.into(), port, username: username.into(),
+        });
     }
 
-    pub fn disconnect(&mut self, name: &str) -> bool {
-        self.connections.iter().any(|c| c.name == name)
-    }
-
-    pub fn list(&self) -> &[Connection] { &self.connections }
+    pub fn list_connections(&self) -> &[Connection] { &self.connections }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
     #[test]
-    fn connection_connect() {
-        let mut r = Model::new();
-        r.add_connection(Connection { name: "work".into(), protocol: "rdp".into(), host: "work.example.com".into(), port: 3389, username: "alice".into() });
-        assert!(r.connect("work"));
-        assert!(r.disconnect("work"));
+    fn legacy_model() {
+        let mut m = Model::new();
+        m.add_connection("srv", "rdp", "host", 3389, "user");
+        assert_eq!(m.connections.len(), 1);
     }
 }
