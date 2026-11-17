@@ -3,7 +3,7 @@ name = "SigmaOS-remmina"
 tier = 2
 stability = "scaffold"
 language = "rust"
-description = "remmina component"
+description = "No GitHub description is set; component scope remains unclassified."
 upstream = []
 
 [contract]
