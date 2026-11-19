@@ -1,8 +1,15 @@
 [package]
-name = "sigmaos_remmina"
+name = "SigmaOS-remmina"
 version = "0.1.0"
 edition = "2021"
+license = "Apache-2.0"
+description = "SigmaOS sigmaos_remmina component"
 
 [lib]
 name = "sigmaos_remmina"
 path = "src/lib.rs"
+
+[dependencies]
+thiserror = "1"
+
+[dev-dependencies]
